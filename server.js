@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
 require("dotenv").config();
 
 const app = require("./src/app");

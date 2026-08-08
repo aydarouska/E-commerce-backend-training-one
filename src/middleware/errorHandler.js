@@ -33,12 +33,29 @@ const errorHandler = (err, req, res, next) => {
     errors = [];
   }
 
+<<<<<<< HEAD
+=======
+  // File upload errors from multer (see src/middleware/upload.js): wrong
+  // mime type, file too large, too many files, etc.
+  if (err.name === "MulterError") {
+    statusCode = 400;
+    message =
+      err.code === "LIMIT_UNEXPECTED_FILE"
+        ? "Only image files (jpeg, png, webp, gif) are allowed"
+        : err.message;
+    errors = [];
+  }
+
+>>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
   if (process.env.NODE_ENV !== "production" && statusCode === 500) {
     console.error(err);
   }
 
+<<<<<<< HEAD
   console.log("برجاء قراءة هذا الخطأ لمعرفة المشكلة:", err);
   
+=======
+>>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
   res.status(statusCode).json({
     success: false,
     message,

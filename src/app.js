@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+const path = require("path");
+>>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -8,6 +12,7 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
+<<<<<<< HEAD
 app.use(cors({
     origin: 'http://localhost:5173', // رابط الفرونت إند الخاص بك (Vite)
     credentials: true,
@@ -17,6 +22,15 @@ app.use(cors({
 
 app.use(express.json());
 
+=======
+app.use(cors());
+app.use(express.json());
+
+// Serves uploaded product images (see src/middleware/upload.js) at
+// /uploads/products/<filename> - the URL saved on Product.image/images.
+app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+
+>>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }
