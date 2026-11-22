@@ -8,7 +8,7 @@
     "dev": "nodemon server.js",
     "seed": "node src/seed/seed.js",
     "seed:products": "node src/seed/addProducts.js",
-    "fix:languages": "node src/seed/fixLanguages.js"
+    "remove:old-products": "node src/seed/removeOldProducts.js"
   },
   "keywords": [
     "express",

@@ -46,7 +46,9 @@ const getProducts = asyncHandler(async (req, res) => {
   const limit = Math.min(Math.max(Number(req.query.limit) || 10, 1), MAX_LIMIT);
   const skip = (page - 1) * limit;
 
-  const sortOption = SORT_OPTIONS[sort] || { createdAt: -1 };
+  // تم تعديلها: بنضيف _id فى الاخر عشان الترتيب يبقى ثابت
+  // من غير كده المنتجات اللى اتضافت فى نفس اللحظه كانت بتتكرر او تختفى بين الصفحات
+  const sortOption = { ...(SORT_OPTIONS[sort] || { createdAt: -1 }), _id: -1 };
 
   const [products, totalProducts] = await Promise.all([
     Product.find(filter).sort(sortOption).skip(skip).limit(limit),
