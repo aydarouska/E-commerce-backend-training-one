@@ -33,8 +33,8 @@ const errorHandler = (err, req, res, next) => {
     errors = [];
   }
 
-<<<<<<< HEAD
-=======
+
+
   // File upload errors from multer (see src/middleware/upload.js): wrong
   // mime type, file too large, too many files, etc.
   if (err.name === "MulterError") {
@@ -46,16 +46,20 @@ const errorHandler = (err, req, res, next) => {
     errors = [];
   }
 
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
   if (process.env.NODE_ENV !== "production" && statusCode === 500) {
     console.error(err);
   }
 
-<<<<<<< HEAD
-  console.log("برجاء قراءة هذا الخطأ لمعرفة المشكلة:", err);
+
+  // تم تعديلها: الاخطاء العاديه (400/401/404) مش بنطبعها عشان التيرمنال يفضل نضيف
+  // بنطبع بس اخطاء السيرفر الحقيقيه (500)
+  if (statusCode >= 500 && process.env.NODE_ENV !== "test") {
+    console.log("برجاء قراءة هذا الخطأ لمعرفة المشكلة:", err);
+  }
   
-=======
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
+
   res.status(statusCode).json({
     success: false,
     message,

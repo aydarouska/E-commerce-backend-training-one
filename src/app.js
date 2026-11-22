@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-=======
 const path = require("path");
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -12,38 +10,69 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-<<<<<<< HEAD
-app.use(cors({
-    origin: 'http://localhost:5173', // رابط الفرونت إند الخاص بك (Vite)
+// تم تعديلها: روابط الفرونت اند المسموحلها تكلم السيرفر بتتقرا من CLIENT_URL فى ملف .env
+// ممكن تكتب اكتر من رابط بينهم فاصله
+// و بناخد الـ origin بس (http://localhost:5173) من غير المسار (/E-commerce-training-one)
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((url) => {
+    try {
+      return new URL(url.trim()).origin;
+    } catch {
+      return url.trim();
+    }
+  });
+
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      // الطلبات اللى مش من متصفح (زى Postman او Paymob) مابتبعتش origin - بنسمح بيها
+      if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+      cb(new Error(`Origin ${origin} not allowed by CORS`));
+    },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+    // ضفنا PATCH عشان تعديل السله و الطلبات
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept-Language"],
+  })
+);
 
-app.use(express.json());
+// قراءه الـ body بصيغه JSON (اقصى حجم 1 ميجا)
+app.use(express.json({ limit: "1mb" }));
 
-=======
-app.use(cors());
-app.use(express.json());
+// تم تعديلها: صور المنتجات بس هى المتاحه للعامه
+// صور الايصالات فى uploads/receipts و بتتعرض من رابط محمى بتسجيل الدخول
+app.use(
+  "/uploads/products",
+  express.static(path.join(__dirname, "..", "uploads", "products"))
+);
 
-// Serves uploaded product images (see src/middleware/upload.js) at
-// /uploads/products/<filename> - the URL saved on Product.image/images.
-app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+// تم الاضافه: صور المنتجات الجاهزه اللى جايه مع الكود نفسه (src/seed/images)
+// الفرق بينها و بين uploads: الصور دى جزء من المشروع و بتترفع مع الكود على GitHub و Render
+// فبتفضل موجوده دايما - اما uploads فبتتمسح على الاستضافه المجانيه لما السيرفر يعيد التشغيل
+// maxAge = المتصفح يحفظ الصوره 7 ايام عشان الموقع يبقى اسرع
+app.use(
+  "/static/products",
+  express.static(path.join(__dirname, "seed", "images"), { maxAge: "7d" })
+);
 
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+// طباعه كل طلب فى التيرمنال (ماعدا وقت التست)
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }
 
+// رابط بسيط للتأكد ان السيرفر شغال
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
-    data: { message: "E-commerce training API is running" },
+    data: { message: "E-commerce API is running" },
   });
 });
 
+// كل روابط الـ API بتبدأ بـ /api
 app.use("/api", routes);
 
+// اى رابط مش موجود + معالج الاخطاء الموحد
 app.use(notFound);
 app.use(errorHandler);
 

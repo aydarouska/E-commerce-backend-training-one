@@ -11,6 +11,10 @@ const createProductValidator = [
   body("image").trim().notEmpty().withMessage("Main image URL is required"),
   body("images").optional().isArray().withMessage("Images must be an array of URLs"),
   body("category").trim().notEmpty().withMessage("Category is required"),
+  // الحقول الانجليزى اختياريه
+  body("nameEn").optional().trim(),
+  body("descriptionEn").optional().trim(),
+  body("categoryEn").optional().trim(),
   body("brand").optional().trim(),
   body("countInStock")
     .optional()
@@ -29,6 +33,10 @@ const updateProductValidator = [
   body("image").optional().trim().notEmpty().withMessage("Main image URL cannot be empty"),
   body("images").optional().isArray().withMessage("Images must be an array of URLs"),
   body("category").optional().trim().notEmpty().withMessage("Category cannot be empty"),
+  // الحقول الانجليزى اختياريه
+  body("nameEn").optional().trim(),
+  body("descriptionEn").optional().trim(),
+  body("categoryEn").optional().trim(),
   body("brand").optional().trim(),
   body("countInStock")
     .optional()

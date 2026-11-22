@@ -1,17 +1,17 @@
 # E-commerce Training API
 
-<<<<<<< HEAD
+
 Backend for the React frontend training course. This lecture (Lecture 1) covers
 **Authentication + Role-Based Access Control**. Later lectures will add
 products, cart, orders, and reviews on top of this same project.
-=======
+
 Backend for the React frontend training course.
 
 - **Lecture 1** covers **Authentication + Role-Based Access Control**.
 - **Lecture 2** covers **Products** (public search/filter/pagination + admin CRUD).
 
 Later lectures will add cart, orders, and reviews on top of this same project.
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
 
 ## Tech Stack
 
@@ -32,13 +32,13 @@ Backend/
       db.js                  # MongoDB connection
     models/
       User.js
-<<<<<<< HEAD
+
     controllers/
       authController.js
     routes/
       index.js               # mounts /api/* route groups
       authRoutes.js
-=======
+
       Product.js
     controllers/
       authController.js
@@ -47,7 +47,7 @@ Backend/
       index.js               # mounts /api/* route groups
       authRoutes.js
       productRoutes.js
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
     middleware/
       auth.js                # protect, isAdmin
       validate.js            # express-validator error formatter
@@ -55,27 +55,27 @@ Backend/
       notFound.js            # 404 handler
     validators/
       authValidators.js
-<<<<<<< HEAD
-=======
+
+
       productValidators.js
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
     utils/
       AppError.js
       asyncHandler.js
       generateToken.js
     seed/
       seed.js
-<<<<<<< HEAD
+
   postman/
     Lecture1-Authentication.postman_collection.json
     Lecture1-Environment.postman_environment.json
-=======
+
       products.js             # product seed data, imported by seed.js
   postman/
     Lecture1-Authentication.postman_collection.json
     Lecture1-Environment.postman_environment.json
     Lecture2-Products.postman_collection.json
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
 ```
 
 Future lectures should add their own `models/`, `controllers/`, `routes/`, and
@@ -108,11 +108,11 @@ in `src/routes/index.js`.
    [MongoDB Atlas](https://www.mongodb.com/atlas) cluster) and put its
    connection string in `MONGO_URI`.
 
-<<<<<<< HEAD
+
 3. Seed the database with test users:
-=======
+
 3. Seed the database with test users and sample products:
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
 
    ```bash
    npm run seed
@@ -126,12 +126,12 @@ in `src/routes/index.js`.
    | user  | user1@test.com    | User1123  |
    | user  | user2@test.com    | User2123  |
 
-<<<<<<< HEAD
-=======
+
+
    ...plus 14 sample products spread across 4 categories (Electronics,
    Clothing, Home & Kitchen, Sports & Outdoors), 4 of them marked as featured.
 
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
 4. Run the server:
 
    ```bash
@@ -151,9 +151,9 @@ in `src/routes/index.js`.
 | GET    | `/api/auth/me`        | Private (JWT)  | Get the current logged-in user        |
 | POST   | `/api/auth/logout`    | Private (JWT)  | Stateless logout (see code comments)  |
 
-<<<<<<< HEAD
+
 All responses follow one of these two shapes:
-=======
+
 ## Endpoints (Lecture 2)
 
 | Method | Route                          | Access             | Description                                                    |
@@ -169,7 +169,7 @@ Admin routes are protected with `protect` + `isAdmin`: no token → `401`,
 valid token but role `"user"` → `403`.
 
 All responses (both lectures) follow one of these two shapes:
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+
 
 ```jsonc
 // success
@@ -181,7 +181,7 @@ All responses (both lectures) follow one of these two shapes:
 
 ## Postman
 
-<<<<<<< HEAD
+
 Import both files from the `postman/` folder into Postman:
 
 - `Lecture1-Authentication.postman_collection.json` - the requests
@@ -190,10 +190,10 @@ Import both files from the `postman/` folder into Postman:
 Run **Login** (or **Register**) first - its test script automatically saves
 the returned JWT into the `token` variable, which the protected requests
 (`Me`, `Logout`) use automatically via Bearer auth.
-=======
+
 Import the collection(s) you need from the `postman/` folder into Postman:
 
 - `Lecture1-Authentication.postman_collection.json` + `Lecture1-Environment.postman_environment.json` (`baseUrl` + `token` variables) — Register/Login/Me/Logout.
   Run **Login** (or **Register**) first - its test script automatically saves the returned JWT into the `token` variable, which the protected requests (`Me`, `Logout`) use automatically via Bearer auth.
 - `Lecture2-Products.postman_collection.json` — all Products endpoints, including separate example requests showing `search`, `category`, price range, `sort`, pagination, and `featured` in action. This collection carries its own `baseUrl` + `token` collection variables and a **Setup → Admin Login** request, so it works standalone even without importing Lecture 1. Run that Admin Login request once before trying **Create/Update/Delete Product**.
->>>>>>> bd00de6628ac0060497cad5d71481ade6f3b647b
+

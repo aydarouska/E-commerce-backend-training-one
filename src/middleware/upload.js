@@ -47,4 +47,26 @@ const uploadProductImages = [
   attachUploadedImageUrls,
 ];
 
-module.exports = { uploadProductImages };
+// ---- رفع صور ايصالات الدفع (انستاباى / تحويل بنكى) ----
+// بتتحفظ فى فولدر uploads/receipts و ده مش متاح للعامه
+// الصوره بتتعرض بس عن طريق GET /api/orders/:id/receipt لصاحب الطلب او الادمن
+const RECEIPT_DIR = path.join(__dirname, "..", "..", "uploads", "receipts");
+fs.mkdirSync(RECEIPT_DIR, { recursive: true });
+
+const receiptStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, RECEIPT_DIR),
+  // اسم الملف: الوقت + 16 حرف عشوائى (صعب حد يخمنه)
+  filename: (req, file, cb) => {
+    const unique = `${Date.now()}-${require("crypto").randomBytes(8).toString("hex")}`;
+    cb(null, `${unique}${path.extname(file.originalname).toLowerCase()}`);
+  },
+});
+
+// single("receipt") يعنى ملف واحد فى حقل اسمه receipt - بنفس فلتر الصور و الحجم (5 ميجا)
+const uploadReceipt = multer({
+  storage: receiptStorage,
+  fileFilter,
+  limits: { fileSize: MAX_FILE_SIZE },
+}).single("receipt");
+
+module.exports = { uploadProductImages, uploadReceipt, RECEIPT_DIR };
