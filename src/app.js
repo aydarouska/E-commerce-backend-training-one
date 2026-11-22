@@ -44,7 +44,7 @@ app.use(express.json({ limit: "1mb" }));
 // صور الايصالات فى uploads/receipts و بتتعرض من رابط محمى بتسجيل الدخول
 app.use(
   "/uploads/products",
-  express.static(path.join(__dirname, "..", "uploads", "products"))
+  express.static(path.join(require("./config/paths").UPLOAD_ROOT, "products"))
 );
 
 // تم الاضافه: صور المنتجات الجاهزه اللى جايه مع الكود نفسه (src/seed/images)

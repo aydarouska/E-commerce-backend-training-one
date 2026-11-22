@@ -6,7 +6,8 @@ const mongoose = require("mongoose");
 // need to find the Atlas cluster's hosts. Falling back to public DNS avoids
 // that class of connection failure without requiring each student to change
 // their OS network settings.
-if (process.env.MONGO_URI?.startsWith("mongodb+srv://")) {
+// تم تعديلها: على Vercel مش محتاجين ده (الـ DNS هناك شغال كويس)
+if (process.env.MONGO_URI?.startsWith("mongodb+srv://") && !process.env.VERCEL) {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
 }
 

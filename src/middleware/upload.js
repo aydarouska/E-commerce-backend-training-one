@@ -1,8 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
+// تم الاضافه: مكان فولدر uploads (بيتغير على Vercel)
+const { UPLOAD_ROOT } = require("../config/paths");
 
-const UPLOAD_DIR = path.join(__dirname, "..", "..", "uploads", "products");
+const UPLOAD_DIR = path.join(UPLOAD_ROOT, "products");
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -50,7 +52,7 @@ const uploadProductImages = [
 // ---- رفع صور ايصالات الدفع (انستاباى / تحويل بنكى) ----
 // بتتحفظ فى فولدر uploads/receipts و ده مش متاح للعامه
 // الصوره بتتعرض بس عن طريق GET /api/orders/:id/receipt لصاحب الطلب او الادمن
-const RECEIPT_DIR = path.join(__dirname, "..", "..", "uploads", "receipts");
+const RECEIPT_DIR = path.join(UPLOAD_ROOT, "receipts");
 fs.mkdirSync(RECEIPT_DIR, { recursive: true });
 
 const receiptStorage = multer.diskStorage({
